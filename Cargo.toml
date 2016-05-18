@@ -1,0 +1,15 @@
+[package]
+name = "va_list"
+version = "0.0.1"
+authors = ["guillaume1.gomez@gmail.com"]
+
+description = "Library to handle va_list"
+repository = "https://github.com/GuillaumeGomez/va_list"
+license = "MIT"
+
+[dependencies]
+libc = "^0.2"
+
+[lib]
+name = "va_list"
+crate_type = ["rlib"]
