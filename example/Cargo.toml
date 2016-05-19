@@ -4,8 +4,8 @@ version = "0.0.1"
 authors = ["guillaume1.gomez@gmail.com"]
 
 [dependencies]
-va_list = { path = ".." }
-libc = "*"
+va_list-rs = { path = ".." }
+libc = "^0.2"
 
 [[bin]]
 name = "example"

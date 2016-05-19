@@ -1,5 +1,5 @@
 [package]
-name = "va_list"
+name = "va_list-rs"
 version = "0.0.1"
 authors = ["guillaume1.gomez@gmail.com"]
 build = "build.rs"
