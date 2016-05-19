@@ -30,7 +30,7 @@ macro_rules! counter {
 ///
 /// ## Example
 ///
-/// ```
+/// ```ignore
 /// to_va_list!(|v: va_list::va_list| {
 ///     vprintf(b"%d %d %s %f\n\0".as_ptr() as *const c_char, v);
 /// },

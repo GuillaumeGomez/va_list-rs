@@ -4,7 +4,7 @@ extern crate libc;
 use libc::{c_char, c_int, c_uint};
 
 extern "C" {
-    fn vprintf(f: *const c_char, ...) -> c_int;
+    fn vprintf(f: *const c_char, v: va_list::va_list) -> c_int;
 }
 
 #[test]
