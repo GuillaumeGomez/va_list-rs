@@ -1,4 +1,3 @@
-#![feature(type_ascription)]
 #![allow(dead_code)]
 #![allow(private_in_public)]
 
