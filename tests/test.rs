@@ -9,8 +9,7 @@ extern "C" {
 
 #[test]
 fn test1() {
-    to_va_list!(|v| {
-        println!("{:?}", v);
+    to_va_list!(|v: va_list::va_list| {
         vprintf(b"%d %d\n\0".as_ptr() as *const c_char, v);
     }, 1, 2);
 }

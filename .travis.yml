@@ -1,0 +1,11 @@
+language: rust
+rust:
+  - nightly
+  - beta
+  - stable
+script:
+  - rustc --version
+  - cargo build
+  - cargo test
+  - cd example
+  - cargo run

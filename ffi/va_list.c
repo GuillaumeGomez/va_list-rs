@@ -1,8 +1,15 @@
 #include <stdarg.h>
+#include <stdio.h>
 
-void create_va_list(void (*f)(void*, va_list), void *arg, unsigned int num_args, ...) {
+struct wrap {
+    void (*f)(void*, va_list);
+    void *arg;
+    unsigned int num_args;
+};
+
+void create_va_list(struct wrap *w, ...) {
     va_list ap;
-    va_start(ap, num_args);
-    f(arg, ap);
+    va_start(ap, w->num_args);
+    w->f(w->arg, &ap);
     va_end(ap);
 }
