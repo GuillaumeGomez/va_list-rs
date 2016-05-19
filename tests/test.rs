@@ -12,4 +12,13 @@ fn test1() {
     to_va_list!(|v: va_list::va_list| {
         vprintf(b"%d %d\n\0".as_ptr() as *const c_char, v);
     }, 1, 2);
+    to_va_list!(|v: va_list::va_list| {
+        vprintf(b"%d %d %d\n\0".as_ptr() as *const c_char, v);
+    }, 1, 2, 3);
+    to_va_list!(|v: va_list::va_list| {
+        vprintf(b"%d %d %d %d\n\0".as_ptr() as *const c_char, v);
+    }, 1, 2, 3, 4);
+    to_va_list!(|v: va_list::va_list| {
+        vprintf(b"%d %d %d %d %d\n\0".as_ptr() as *const c_char, v);
+    }, 1, 2, 3, 4, 5);
 }
