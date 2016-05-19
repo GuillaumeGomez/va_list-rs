@@ -1,4 +1,4 @@
-# va_list-rs
+# va_list-rs [![Build Status](https://travis-ci.org/GuillaumeGomez/va_list-rs.png?branch=master)](https://travis-ci.org/GuillaumeGomez/va_list-rs)
 
 A way to use C `va_list` from Rust.
 
