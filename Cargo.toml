@@ -5,8 +5,10 @@ authors = ["guillaume1.gomez@gmail.com"]
 build = "build.rs"
 
 description = "Library to handle va_list"
-repository = "https://github.com/GuillaumeGomez/va_list"
+repository = "https://github.com/GuillaumeGomez/va_list-rs"
 license = "MIT"
+
+keywords = ["va_arg", "va_list", "C"]
 
 [build-dependencies]
 gcc = "0.3"
@@ -16,4 +18,3 @@ libc = "^0.2"
 
 [lib]
 name = "va_list"
-crate_type = ["rlib"]
