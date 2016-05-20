@@ -15,9 +15,6 @@ macro_rules! counter {
     ($arg:expr, $arg2:expr, $($args:expr),*) => {{
         counter!($($args),*) + 2
     }};
-    ($arg:expr, $($args:expr),*) => {{
-        counter!($($args),*) + 1
-    }}
 }
 
 /// This macro is the only thing provided by this crate.
