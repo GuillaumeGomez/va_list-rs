@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 #![allow(private_in_public)]
+#![allow(improper_ctypes)]
 
 extern crate libc;
 
@@ -45,27 +46,31 @@ macro_rules! to_va_list {
             f(ap);
         }
 
-        #[repr(C)]
-        pub struct Wrap {
-            pub f: extern "C" fn(*mut libc::c_void, $crate::va_list),
-            pub c: *mut libc::c_void,
-            pub len: c_uint,
-        }
-
-        extern "C" {
-            fn create_va_list(w: *mut Wrap, ...);
-        }
-
         unsafe {
             let fu = $func;
-            let wrap = Wrap {
+            let wrap = $crate::Wrap {
                 f: std::mem::transmute(call_func as usize),
                 c: $crate::convert_closure(fu),
                 len: counter!($($args),*),
             };
-            create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
+            $crate::create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
         }
     }}
+}
+
+
+#[repr(C)]
+#[doc(hidden)]
+pub struct Wrap {
+    pub f: extern "C" fn(*mut libc::c_void, va_list),
+    pub c: *mut libc::c_void,
+    pub len: libc::c_uint,
+}
+
+extern "C" {
+    #[allow(improper_ctypes)]
+    #[doc(hidden)]
+    pub fn create_va_list(w: *mut Wrap, ...);
 }
 
 #[doc(hidden)]
@@ -75,8 +80,8 @@ pub fn convert_closure<F: Fn(va_list) + 'static>(f: F) -> *mut libc::c_void {
 }
 
 #[doc(hidden)]
-#[repr(C)]
-struct _va_list;
+#[allow(non_camel_case_types)]
+enum _va_list {}
 
 #[allow(non_camel_case_types)]
 pub type va_list = *mut _va_list;
