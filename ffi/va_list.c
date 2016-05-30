@@ -4,7 +4,6 @@
 struct wrap {
     void (*f)(void*, va_list);
     void *arg;
-    unsigned int num_args;
 };
 
 void create_va_list(struct wrap *w, ...) {

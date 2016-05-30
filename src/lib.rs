@@ -4,20 +4,6 @@
 
 extern crate libc;
 
-#[doc(hidden)]
-#[macro_export]
-macro_rules! counter {
-    ($arg:expr) => {{
-        1
-    }};
-    ($arg:expr, $arg2:expr) => {{
-        2
-    }};
-    ($arg:expr, $arg2:expr, $($args:expr),*) => {{
-        counter!($($args),*) + 2
-    }};
-}
-
 /// This macro is the only thing provided by this crate.
 ///
 /// ## Arguments
@@ -51,7 +37,6 @@ macro_rules! to_va_list {
             let wrap = $crate::Wrap {
                 f: std::mem::transmute(call_func as usize),
                 c: $crate::convert_closure(fu),
-                len: counter!($($args),*),
             };
             $crate::create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
         }
@@ -64,7 +49,6 @@ macro_rules! to_va_list {
 pub struct Wrap {
     pub f: extern "C" fn(*mut libc::c_void, va_list),
     pub c: *mut libc::c_void,
-    pub len: libc::c_uint,
 }
 
 extern "C" {

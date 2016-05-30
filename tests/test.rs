@@ -23,7 +23,6 @@ fn test1() {
     }, 1 as c_int, 2 as c_int, 3 as c_int, 4 as c_int, 5 as c_int);
 }
 
-
 #[cfg(all(target_os = "windows", target_env = "msvc"))]
 mod platform {
     #[link(name = "legacy_stdio_definitions")] extern {}
