@@ -14,10 +14,12 @@ extern crate libc;
 /// ## Example
 ///
 /// ```ignore
-/// to_va_list!(|v: va_list::va_list| {
-///     vprintf(b"%d %d %s %f\n\0".as_ptr() as *const c_char, v);
-/// },
-/// 1, 2, b"salut!\0".as_ptr(), 32f32 as c_double);
+/// unsafe {
+///     to_va_list!(|v: va_list::va_list| {
+///         vprintf(b"%d %d %s %f\n\0".as_ptr() as *const c_char, v);
+///     },
+///     1, 2, b"salut!\0".as_ptr(), 32f32 as c_double);
+/// }
 /// ```
 ///
 /// ## Warning
@@ -27,19 +29,21 @@ extern crate libc;
 #[macro_export]
 macro_rules! to_va_list {
     ($func:expr, $($args:expr),*) => {{
+        #[inline(always)]
+        unsafe fn should_be_in_unsafe_block() {}
+        should_be_in_unsafe_block();
+
         unsafe extern "C" fn call_func(f: *mut libc::c_void, ap: $crate::va_list) {
             let f: &Box<Fn($crate::va_list) + 'static> = std::mem::transmute(f);
             f(ap);
         }
 
-        unsafe {
-            let fu = $func;
-            let wrap = $crate::Wrap {
-                f: std::mem::transmute(call_func as usize),
-                c: $crate::convert_closure(fu),
-            };
-            $crate::create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
-        }
+        let fu = $func;
+        let wrap = $crate::Wrap {
+            f: std::mem::transmute(call_func as usize),
+            c: $crate::convert_closure(fu),
+        };
+        $crate::create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
     }}
 }
 
