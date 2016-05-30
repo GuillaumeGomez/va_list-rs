@@ -9,7 +9,7 @@ struct wrap {
 
 void create_va_list(struct wrap *w, ...) {
     va_list ap;
-    va_start(ap, w->num_args);
-    w->f(w->arg, &ap);
+    va_start(ap, w);
+    w->f(w->arg, ap);
     va_end(ap);
 }
