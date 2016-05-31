@@ -8,7 +8,7 @@ A way to use C `va_list` from Rust.
 extern crate libc;
 #[macro_use] extern crate va_list;
 
-use libc::{c_char, c_int, c_uint};
+use libc::{c_char, c_int};
 
 // Here we declare the C function with va_list that we'll use.
 extern "C" {
