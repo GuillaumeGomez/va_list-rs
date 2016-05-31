@@ -1,6 +1,4 @@
 #![allow(dead_code)]
-#![allow(private_in_public)]
-#![allow(improper_ctypes)]
 
 extern crate libc;
 
@@ -69,7 +67,7 @@ pub fn convert_closure<F: Fn(va_list) + 'static>(f: F) -> *mut libc::c_void {
 
 #[doc(hidden)]
 #[allow(non_camel_case_types)]
-enum _va_list {}
+pub enum _va_list {}
 
 #[allow(non_camel_case_types)]
 pub type va_list = *mut _va_list;
