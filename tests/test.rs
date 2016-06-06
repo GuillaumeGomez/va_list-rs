@@ -25,6 +25,15 @@ fn test1() {
     }
 }
 
+#[test]
+fn no_args() {
+    unsafe {
+        to_va_list!(|v: va_list::va_list| {
+            vprintf(b"test\n\0".as_ptr() as *const c_char, v);
+        });
+    }
+}
+
 #[cfg(all(target_os = "windows", target_env = "msvc"))]
 mod platform {
     #[link(name = "legacy_stdio_definitions")] extern {}

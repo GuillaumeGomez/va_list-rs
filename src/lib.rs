@@ -42,6 +42,23 @@ macro_rules! to_va_list {
             c: $crate::convert_closure(fu),
         };
         $crate::create_va_list(Box::into_raw(Box::new(wrap)), $($args),*);
+    }};
+    ($func:expr) => {{
+        #[inline(always)]
+        unsafe fn should_be_in_unsafe_block() {}
+        should_be_in_unsafe_block();
+
+        unsafe extern "C" fn call_func(f: *mut libc::c_void, ap: $crate::va_list) {
+            let f: &Box<Fn($crate::va_list) + 'static> = std::mem::transmute(f);
+            f(ap);
+        }
+
+        let fu = $func;
+        let wrap = $crate::Wrap {
+            f: std::mem::transmute(call_func as usize),
+            c: $crate::convert_closure(fu),
+        };
+        $crate::create_va_list(Box::into_raw(Box::new(wrap)));
     }}
 }
 
